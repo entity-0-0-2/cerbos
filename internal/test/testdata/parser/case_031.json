@@ -1,0 +1,88 @@
+{
+    "description": "Wildcard characters in resource policy names are rejected",
+    "wantErrors": [
+        {
+            "kind": "KIND_VALIDATION_ERROR",
+            "position": {
+                "line": 6,
+                "column": 3,
+                "path": "$.resourcePolicy.resource"
+            },
+            "message": "resourcePolicy.resource: does not match regex pattern `^[^!*?\\[\\]{}]+$`"
+        },
+        {
+            "kind": "KIND_VALIDATION_ERROR",
+            "position": {
+                "line": 17,
+                "column": 3,
+                "path": "$.resourcePolicy.resource"
+            },
+            "message": "resourcePolicy.resource: does not match regex pattern `^[^!*?\\[\\]{}]+$`"
+        }
+    ],
+    "want": [
+        {
+            "message": {
+                "apiVersion": "api.cerbos.dev/v1",
+                "resourcePolicy": {
+                    "resource": "/*",
+                    "version": "default",
+                    "rules": [
+                        {
+                            "actions": [
+                                "access"
+                            ],
+                            "roles": [
+                                "user",
+                                "user_premium"
+                            ],
+                            "effect": "EFFECT_ALLOW"
+                        }
+                    ]
+                }
+            },
+            "errors": [
+                {
+                    "kind": "KIND_VALIDATION_ERROR",
+                    "position": {
+                        "line": 6,
+                        "column": 3,
+                        "path": "$.resourcePolicy.resource"
+                    },
+                    "message": "resourcePolicy.resource: does not match regex pattern `^[^!*?\\[\\]{}]+$`"
+                }
+            ]
+        },
+        {
+            "message": {
+                "apiVersion": "api.cerbos.dev/v1",
+                "resourcePolicy": {
+                    "resource": "/premium/*",
+                    "version": "default",
+                    "rules": [
+                        {
+                            "actions": [
+                                "access"
+                            ],
+                            "roles": [
+                                "user_premium"
+                            ],
+                            "effect": "EFFECT_ALLOW"
+                        }
+                    ]
+                }
+            },
+            "errors": [
+                {
+                    "kind": "KIND_VALIDATION_ERROR",
+                    "position": {
+                        "line": 17,
+                        "column": 3,
+                        "path": "$.resourcePolicy.resource"
+                    },
+                    "message": "resourcePolicy.resource: does not match regex pattern `^[^!*?\\[\\]{}]+$`"
+                }
+            ]
+        }
+    ]
+}

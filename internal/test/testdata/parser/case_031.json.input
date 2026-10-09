@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../../../../schema/jsonschema/cerbos/policy/v1/Policy.schema.json
+---
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  version: "default"
+  resource: /*
+  rules:
+    - actions: ["access"]
+      roles:
+        - user
+        - user_premium
+      effect: EFFECT_ALLOW
+---
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  version: "default"
+  resource: /premium/*
+  rules:
+    - actions: ["access"]
+      roles:
+        - user_premium
+      effect: EFFECT_ALLOW

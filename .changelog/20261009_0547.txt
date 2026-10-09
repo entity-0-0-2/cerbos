@@ -1,0 +1,2 @@
+type:chore
+Add regression tests rejecting wildcard characters in policy names

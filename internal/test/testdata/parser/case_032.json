@@ -1,0 +1,84 @@
+{
+    "description": "Wildcard characters in principal and role policy names are rejected",
+    "wantErrors": [
+        {
+            "kind": "KIND_VALIDATION_ERROR",
+            "position": {
+                "line": 5,
+                "column": 3,
+                "path": "$.principalPolicy.principal"
+            },
+            "message": "principalPolicy.principal: does not match regex pattern `^[^!*?\\[\\]{}]+$`"
+        },
+        {
+            "kind": "KIND_VALIDATION_ERROR",
+            "position": {
+                "line": 15,
+                "column": 3,
+                "path": "$.rolePolicy.role"
+            },
+            "message": "rolePolicy.role: does not match regex pattern `^[^!*?\\[\\]{}]+$`"
+        }
+    ],
+    "want": [
+        {
+            "message": {
+                "apiVersion": "api.cerbos.dev/v1",
+                "principalPolicy": {
+                    "principal": "donald*",
+                    "version": "default",
+                    "rules": [
+                        {
+                            "resource": "salary_record",
+                            "actions": [
+                                {
+                                    "action": "view",
+                                    "effect": "EFFECT_ALLOW"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "errors": [
+                {
+                    "kind": "KIND_VALIDATION_ERROR",
+                    "position": {
+                        "line": 5,
+                        "column": 3,
+                        "path": "$.principalPolicy.principal"
+                    },
+                    "message": "principalPolicy.principal: does not match regex pattern `^[^!*?\\[\\]{}]+$`"
+                }
+            ]
+        },
+        {
+            "message": {
+                "apiVersion": "api.cerbos.dev/v1",
+                "rolePolicy": {
+                    "role": "admin*",
+                    "version": "default",
+                    "rules": [
+                        {
+                            "resource": "leave_request",
+                            "allowActions": [
+                                "view"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "errors": [
+                {
+                    "kind": "KIND_VALIDATION_ERROR",
+                    "position": {
+                        "line": 15,
+                        "column": 3,
+                        "path": "$.rolePolicy.role"
+                    },
+                    "message": "rolePolicy.role: does not match regex pattern `^[^!*?\\[\\]{}]+$`"
+                }
+            ]
+        }
+    ]
+}
